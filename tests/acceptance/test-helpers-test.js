@@ -14,3 +14,7 @@ test("t test helper", function(assert) {
 test("expectTranslation test helper", function() {
   expectTranslation('.no-interpolations', 'no.interpolations');
 });
+
+test('can override the target locale', function(assert) {
+  assert.textIs('.locale-override', 'texto sin interpolaciones');
+});
