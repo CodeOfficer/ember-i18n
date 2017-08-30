@@ -31,7 +31,7 @@ export default Parent.extend(Evented, {
       until: '5.0.0'
     });
 
-    const locale = this.get('_locale');
+    const locale = this._getLocaleWithOverride(data);
     assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
 
@@ -49,7 +49,7 @@ export default Parent.extend(Evented, {
 
   // @public
   exists(key, data = {}) {
-    const locale = this.get('_locale');
+    const locale = this._getLocaleWithOverride(data);
     assert("I18n: Cannot check existance when locale is null", locale);
     const count = get(data, 'count');
 
@@ -84,6 +84,21 @@ export default Parent.extend(Evented, {
       this.set('locale', defaultLocale);
     }
   }),
+
+  // @private
+  // Retrieves the current locale, allowing it to be overridden by a `localeOverride`
+  // option in the translation data
+  _getLocaleWithOverride: function(data) {
+    let locale = this.get('_locale');
+    let localeOverride = get(data, 'localeOverride');
+
+    if (localeOverride) {
+      locale = new Locale(localeOverride, getOwner(this));
+      // delete data.localeOverride;
+    }
+
+    return locale;
+  },
 
   // @private
   //

@@ -120,3 +120,10 @@ test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
+
+test("locale can be overridden", function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  const result = i18n.t('no.interpolations', { localeOverride: 'es' });
+  assert.equal(result, 'texto sin interpolaciones');
+});

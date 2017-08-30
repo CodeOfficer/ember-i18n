@@ -34,6 +34,12 @@ test('fallsback to the parent locale', function(assert) {
   assert.equal(i18n.exists('no.interpolations.either'), true);
 });
 
+test('allows overriding the locale', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  assert.equal(i18n.exists('no.interpolations.either', { localeOverride: 'es' }), false);
+});
+
 test('non-existing translations when checked twice do not exist', function (assert) {
   const i18n = this.subject({ locale: 'en' });
 
